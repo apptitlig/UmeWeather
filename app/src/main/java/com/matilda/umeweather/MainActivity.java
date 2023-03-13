@@ -1,4 +1,4 @@
-package com.example.umeweather;
+package com.matilda.umeweather;
 
 import androidx.appcompat.app.AppCompatActivity;
 

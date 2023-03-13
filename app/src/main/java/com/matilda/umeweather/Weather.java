@@ -1,4 +1,4 @@
-package com.example.umeweather;
+package com.matilda.umeweather;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -10,18 +10,12 @@ import android.util.Log;
 import android.widget.RemoteViews;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
