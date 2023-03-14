@@ -2,6 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#00A5A5A5"
+    android:id="@+id/relativelayout"
     android:theme="@style/Theme.UmeWeather.AppWidgetContainer">
 
     <TextView

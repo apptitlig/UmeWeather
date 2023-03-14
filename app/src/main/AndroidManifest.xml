@@ -35,6 +35,16 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/weather_info" />
         </receiver>
+
+
+        <receiver
+            android:name=".Receiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.matilda.weather.MY_BUTTTON_START" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

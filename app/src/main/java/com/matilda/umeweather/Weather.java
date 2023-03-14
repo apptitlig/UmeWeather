@@ -33,36 +33,18 @@ public class Weather extends AppWidgetProvider {
     public Weather() throws XmlPullParserException {
     }
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-        Log.d("Matilda", "updateAppWidget");
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.weather);
-        views.setOnClickPendingIntent(R.id.appwidget_text, getPendingSelfIntent(context, MY_BUTTTON_START));
-
-        // Instruct the widget manager to update the widget
-        appWidgetManager.updateAppWidget(appWidgetId, views);
-    }
-
-    protected static PendingIntent getPendingSelfIntent(Context context, String action) {
-        Intent intent = new Intent(context, Weather.class);
-        intent.setAction(action);
-        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-    }
-
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        // There may be multiple widgets active, so update all of them
-        Log.d("Matilda", "onUpdate" + appWidgetIds.length);
-        for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId);
-        }
+
+            UpdateWidget(context);
+
     }
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
-        Log.d("Matilda", "onReceive");
         UpdateWidget(context);
     };
 
-    private void UpdateWidget(Context context){
+    static void UpdateWidget(Context context){
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.weather);
         ComponentName localComponentName = new ComponentName(context, Weather.class);
         try {
@@ -73,17 +55,24 @@ public class Weather extends AppWidgetProvider {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        // Create an Intent to launch ExampleActivity
+        Intent intent = new Intent(context, Receiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+        // Get the layout for the App Widget and attach an on-click listener to the button
+        //views = new RemoteViews(context.getPackageName(), R.layout.weather);
+        views.setOnClickPendingIntent(R.id.relativelayout, pendingIntent);
+        // Tell the AppWidgetManager to perform an update on the current App Widget
         AppWidgetManager.getInstance(context).updateAppWidget(localComponentName, views);
     }
 
-    private String GetData() throws IOException, InterruptedException {
+    private static String GetData() throws IOException, InterruptedException {
         AtomicReference<String> returnvalue = new AtomicReference<>("Failed");
         ExecutorService executorService = Executors.newSingleThreadExecutor();
 
         executorService.execute(() -> {
             try {
-                Log.d("Matilda", "GetData");
-
                 String urlString = "http://130.239.117.8/TFE-vadertjanst/Service1.asmx/Temp";
                 URL url = new URL(urlString);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
