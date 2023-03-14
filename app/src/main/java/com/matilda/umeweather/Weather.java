@@ -35,10 +35,9 @@ public class Weather extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-
             UpdateWidget(context);
-
     }
+
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
         UpdateWidget(context);
